@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chaitanya Vaddadi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d1b2a;
+  --ink-mid: #2e4057;
+  --ink-soft: #6b7f8e;
+  --accent: #1a3c5e;
+  --gold: #b5813a;
+  --gold-light: #d4a85c;
+  --rule: #dde3ea;
+  --bg: #f8f6f1;
+  --surface: #ffffff;
+  --tag-bg: #eaecef;
+  --timeline: #c8d2db;
+  --dot: #1a3c5e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px 100px;
+  position: relative;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 72px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+}
+
+.name-wrap { position: relative; }
+
+.name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--accent);
+  overflow: hidden;
+}
+
+.name-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: wordRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.name-word:nth-child(2) { animation-delay: 0.14s; margin-left: 0.25em; }
+
+.name-accent {
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  width: 0;
+  animation: lineGrow 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.tagline {
+  margin-top: 18px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.5s forwards;
+}
+
+.tagline span { display: inline-block; margin: 0 10px; color: var(--gold); font-size: 0.55rem; }
+
+.contact-block {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 2.1;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.4s forwards;
+}
+
+.contact-block a {
+  color: var(--accent);
+  text-decoration: none;
+  position: relative;
+}
+
+.contact-block a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.contact-block a:hover::after { width: 100%; }
+
+/* ── DOWNLOAD ── */
+.download-bar {
+  padding: 20px 0 0;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.7s forwards;
+}
+
+.btn-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  padding: 9px 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-dl::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-101%);
+  transition: transform 0.25s ease;
+  z-index: 0;
+}
+
+.btn-dl:hover::before { transform: translateX(0); }
+.btn-dl:hover { color: #fff; }
+.btn-dl span, .btn-dl svg { position: relative; z-index: 1; }
+.btn-dl svg { width: 12px; height: 12px; }
+
+/* ── LAYOUT ── */
+main { margin-top: 0; }
+
+.section {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0 40px;
+}
+
+.section-label {
+  padding-top: 52px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  position: sticky;
+  top: 32px;
+  align-self: start;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 10px;
+}
+
+.section-body {
+  padding-top: 52px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ── SUMMARY ── */
+.summary-text {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  max-width: 600px;
+}
+
+.summary-text strong { color: var(--ink); font-weight: 500; }
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline-spine {
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--timeline);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-spine.drawn { transform: scaleY(1); }
+
+.job {
+  position: relative;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.job.visible { opacity: 1; transform: translateX(0); }
+.job:last-child { margin-bottom: 0; }
+
+.job::before {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--timeline);
+  transition: border-color 0.4s, background 0.4s;
+  z-index: 2;
+}
+
+.job.visible::before {
+  border-color: var(--dot);
+  background: var(--dot);
+  animation: dotPulse 0.5s ease forwards;
+}
+
+.job::after {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--dot);
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.job.visible::after {
+  animation: ringPulse 0.8s ease 0.1s forwards;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.job-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.job-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.job-company {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.job-location { color: var(--ink-soft); font-weight: 300; }
+
+ul.bullets { list-style: none; }
+
+ul.bullets li {
+  font-size: 0.86rem;
+  color: var(--ink-mid);
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 6px;
+  line-height: 1.65;
+}
+
+ul.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hl { font-weight: 500; color: var(--ink); }
+
+/* ── PROJECTS ── */
+.projects-grid { display: grid; gap: 20px; }
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--gold);
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover::before { height: 100%; }
+.project-card:hover { box-shadow: 0 8px 32px rgba(26,60,94,0.08); }
+.project-card.visible { opacity: 1; transform: translateY(0); }
+
+.project-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.project-sub {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.project-sub a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(181,129,58,0.3); }
+.project-sub a:hover { border-color: var(--gold); }
+
+.project-desc { font-size: 0.86rem; color: var(--ink-mid); line-height: 1.7; }
+
+/* ── SKILLS ── */
+.skills-grid { display: grid; gap: 16px; }
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  align-items: start;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.skill-row.visible { opacity: 1; transform: translateX(0); }
+
+.skill-cat {
+  font-size: 0.67rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-top: 4px;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  background: var(--tag-bg);
+  color: var(--ink-mid);
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+/* ── EDUCATION ── */
+.edu {
+  margin-bottom: 22px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.edu:last-child { margin-bottom: 0; }
+.edu.visible { opacity: 1; transform: translateY(0); }
+.edu-degree { font-size: 0.92rem; font-weight: 500; color: var(--ink); }
+.edu-school { font-size: 0.8rem; color: var(--ink-soft); margin-top: 3px; }
+.edu-detail { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--gold); margin-top: 4px; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+/* ── KEYFRAMES ── */
+@keyframes wordRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lineGrow {
+  to { width: 200px; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotPulse {
+  0%   { transform: scale(0.4); }
+  70%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ringPulse {
+  0%   { opacity: 0.5; transform: scale(0.6); }
+  100% { opacity: 0;   transform: scale(2.2); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .header-inner { grid-template-columns: 1fr; }
+  .contact-block { text-align: left; }
+  .section { grid-template-columns: 1fr; }
+  .section-label { position: static; padding-top: 36px; padding-bottom: 6px; }
+  .section-body { border-top: none; padding-top: 4px; }
+  .skill-row { grid-template-columns: 1fr; gap: 6px; }
+  .download-bar { justify-content: flex-start; }
+  footer { flex-direction: column; gap: 6px; }
+}
+
+@media print {
+  .download-bar, footer { display: none; }
+  * { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .timeline-spine { transform: scaleY(1) !important; }
+  .job, .project-card, .skill-row, .edu { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-inner">
+      <div class="name-wrap">
+        <div class="name">
+          <span class="name-word">Chaitanya</span>
+          <span class="name-word">Vaddadi</span>
+        </div>
+        <div class="name-accent"></div>
+        <div class="tagline">
+          Financial Crime <span>◆</span> AML & Sanctions <span>◆</span> Fraud & Risk <span>◆</span> AI & Trading
+        </div>
+      </div>
+      <div class="contact-block">
+        Bengaluru, Karnataka<br>
+        <a href="mailto:venkatchaitanya.v@gmail.com">venkatchaitanya.v@gmail.com</a><br>
+        <a href="tel:+917989937808">+91 79899 37808</a><br>
+        <a href="https://linkedin.com/in/chaitanyavaddadi" target="_blank">linkedin.com/in/chaitanyavaddadi</a><br>
+        <a href="https://budgetmateai.com" target="_blank">budgetmateai.com</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="download-bar">
+    <a href="Chaitanya_Vaddadi_Resume.pdf" download class="btn-dl">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      <span>Download PDF</span>
+    </a>
+  </div>
+
+  <main>
+
+    <!-- PROFILE -->
+    <div class="section">
+      <div class="section-label">Profile</div>
+      <div class="section-body">
+        <p class="summary-text">
+          Financial Crime and Risk professional with <strong>7+ years</strong> across APAC, specialising in AML transaction monitoring, sanctions screening, crypto investigations, and fraud risk operations at <strong>Stripe, Amazon,</strong> and <strong>Newfold Digital.</strong> Alongside professional work, an active builder — running a self-hosted personal AI assistant on OpenClaw, publishing at the intersection of AI and finance via <strong>budgetmateai.com</strong>, and developing quantitative trading algorithms for Indian equity markets and gold. Open to specialist, senior, and management roles in Financial Crime, Fraud, and Compliance.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+      <div class="section-label">Experience</div>
+      <div class="section-body">
+        <div class="timeline">
+          <div class="timeline-spine" id="timelineSpine"></div>
+
+          <div class="job" data-delay="0">
+            <div class="job-header">
+              <div class="job-title">Financial Crimes Operations</div>
+              <div class="job-date">Jan 2026 – Present</div>
+            </div>
+            <div class="job-company">Stripe &nbsp;<span class="job-location">· Bengaluru, Karnataka</span></div>
+            <ul class="bullets">
+              <li>Own APAC AML surveillance end-to-end: rule performance analysis via SQL, threshold recalibration, and pre-deployment validation across Transaction Monitoring and Customer Risk Rating controls.</li>
+              <li>Second-line control oversight; partner with Compliance and 1LoD to close control gaps and ensure regulatory preparedness across APAC jurisdictions.</li>
+              <li>Spearheaded Crypto Investigations as primary subject-matter resource; designed and delivered training across <span class="hl">3 analyst cohorts</span> on blockchain tracing and entity resolution using TRM Labs.</li>
+              <li>Designed AI-driven sanctions screening workflows — <span class="hl">30% reduction</span> in manual review time; governance checkpoints to validate AI outputs pre-deployment.</li>
+              <li>Delivered <span class="hl">35% false positive reduction</span>, <span class="hl">~220 hrs/month saved</span>, and <span class="hl">40% faster</span> decision cycles — reported quarterly to VP leadership.</li>
+              <li>Lean-style redesign of sanctions triage — <span class="hl">38% AHT reduction</span>, improved audit traceability and SLA compliance.</li>
+              <li>Mentored junior analysts; drove governance best practices now used across APAC team; reduced new-hire ramp time by <span class="hl">~40%</span>.</li>
+              <li><em>Awards:</em> Stripe Excellence (Q4 2023, Q2 2024, Q2 2025) &nbsp;·&nbsp; FinCrimes Innovation (Q4 2024) &nbsp;·&nbsp; SDC Bridge Builder (Q4 2024)</li>
+            </ul>
+          </div>
+
+          <div class="job" data-delay="120">
+            <div class="job-header">
+              <div class="job-title">Fraud Specialist</div>
+              <div class="job-date">Sep 2022 – Jan 2023</div>
+            </div>
+            <div class="job-company">Newfold Digital &nbsp;<span class="job-location">· Mumbai (Remote)</span></div>
+            <ul class="bullets">
+              <li>Mitigated payment fraud and account compromise across high-volume environments; partnered with Engineering to close security gaps and restore service continuity.</li>
+              <li>Applied trend analysis to identify emerging fraud typologies; control adjustments reduced repeat incidents and improved detection precision.</li>
+            </ul>
+          </div>
+
+          <div class="job" data-delay="240">
+            <div class="job-header">
+              <div class="job-title">Investigation Specialist — Fraud & Risk</div>
+              <div class="job-date">Jun 2019 – Aug 2022</div>
+            </div>
+            <div class="job-company">Amazon &nbsp;<span class="job-location">· Hyderabad</span></div>
+            <ul class="bullets">
+              <li>Root-cause analysis across <span class="hl">1,200+ monthly fraud cases</span>; authored SOPs reducing escalations by <span class="hl">20%</span>.</li>
+              <li>Segmentation analysis identified undocumented fraud patterns; control adjustments decreased reputational risk incidents by <span class="hl">22% YoY</span>.</li>
+              <li>Partnered with Product and Engineering on detection workflows; threshold adjustments improved resolution efficiency by <span class="hl">15%</span>.</li>
+              <li>Consistently ranked top performer across account takeover, payment fraud, and policy abuse investigations.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="section">
+      <div class="section-label">Projects</div>
+      <div class="section-body">
+        <div class="projects-grid">
+
+          <div class="project-card" data-delay="0">
+            <div class="project-name">Personal AI Assistant — OpenClaw</div>
+            <div class="project-sub">Self-hosted · Node.js · Claude API</div>
+            <p class="project-desc">Built and run a personal AI assistant using the OpenClaw open-source framework — a self-hosted agent runtime connecting LLMs to messaging platforms, local tools, and scheduled automations. Configured persistent memory, custom skills, and multi-channel routing for a fully autonomous 24/7 assistant.</p>
+          </div>
+
+          <div class="project-card" data-delay="120">
+            <div class="project-name">Algorithmic Trading Systems</div>
+            <div class="project-sub">Python · Private GitHub · Indian Markets & XAUUSD</div>
+            <p class="project-desc">Suite of quantitative trading strategies built in Python with backtesting, signal generation, and risk management modules. Strategies include <span class="hl">2-min Reversal</span>, <span class="hl">Iron Condor</span>, <span class="hl">Opening Range Breakout</span> (15min & 60min) for Indian equity markets, and an <span class="hl">Engulfing Pattern algorithm</span> for XAUUSD (gold).</p>
+          </div>
+
+          <div class="project-card" data-delay="240">
+            <div class="project-name">BudgetMate AI</div>
+            <div class="project-sub"><a href="https://budgetmateai.com" target="_blank">budgetmateai.com</a> · Self-hosted Blog</div>
+            <p class="project-desc">Independently run blog covering the intersection of AI and personal finance — AI-assisted budgeting, trading automation, and practical fintech applications. Fully self-hosted on a personal server.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section">
+      <div class="section-label">Skills</div>
+      <div class="section-body">
+        <div class="skills-grid">
+          <div class="skill-row" data-delay="0">
+            <div class="skill-cat">Financial Crime</div>
+            <div class="tags">
+              <span class="tag">AML</span><span class="tag">KYC</span><span class="tag">Sanctions</span><span class="tag">Transaction Monitoring</span><span class="tag">EDD</span><span class="tag">Crypto Investigations</span><span class="tag">TRM Labs</span><span class="tag">Fraud Prevention</span>
+            </div>
+          </div>
+          <div class="skill-row" data-delay="80">
+            <div class="skill-cat">Detection</div>
+            <div class="tags">
+              <span class="tag">Rule Design</span><span class="tag">Threshold Calibration</span><span class="tag">Alert Management</span><span class="tag">False Positive Reduction</span><span class="tag">Audit Readiness</span>
+            </div>
+          </div>
+          <div class="skill-row" data-delay="160">
+            <div class="skill-cat">Governance</div>
+            <div class="tags">
+              <span class="tag">APAC Regulatory</span><span class="tag">KPI/KRI</span><span class="tag">SOP Development</span><span class="tag">2LoD Oversight</span><span class="tag">Change Management</span>
+            </div>
+          </div>
+          <div class="skill-row" data-delay="240">
+            <div class="skill-cat">Technology</div>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Excel/VBA</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Salesforce</span><span class="tag">Jira</span><span class="tag">OpenClaw</span><span class="tag">Claude API</span>
+            </div>
+          </div>
+          <div class="skill-row" data-delay="320">
+            <div class="skill-cat">Trading</div>
+            <div class="tags">
+              <span class="tag">Algo Trading</span><span class="tag">ORB</span><span class="tag">Iron Condor</span><span class="tag">Reversal Strategies</span><span class="tag">XAUUSD</span><span class="tag">Backtesting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+      <div class="section-label">Education</div>
+      <div class="section-body">
+        <div class="edu" data-delay="0">
+          <div class="edu-degree">M.Tech, Electrical & Electronics Engineering</div>
+          <div class="edu-school">Gandhi Institute of Technology & Management (GITAM), Visakhapatnam</div>
+          <div class="edu-detail">2017 · CGPA 3.75 / 4.0</div>
+        </div>
+        <div class="edu" data-delay="100">
+          <div class="edu-degree">B.Tech, Electronics & Communication Engineering</div>
+          <div class="edu-school">JNT University, Visakhapatnam</div>
+          <div class="edu-detail">2011 · CGPA 3.6 / 4.0</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>Chaitanya Vaddadi &nbsp;·&nbsp; Bengaluru, India</span>
+    <span>Updated March 2026</span>
+  </footer>
+
+</div>
+
+<script>
+const obs = (selector, options) => {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const delay = parseInt(e.target.dataset.delay || 0);
+        setTimeout(() => e.target.classList.add('visible'), delay);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px', ...options });
+  document.querySelectorAll(selector).forEach(el => io.observe(el));
+};
+
+// Timeline spine draws when it enters viewport
+const spine = document.getElementById('timelineSpine');
+if (spine) {
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      spine.classList.add('drawn');
+    }
+  }, { threshold: 0.05 }).observe(spine.parentElement);
+}
+
+obs('.job');
+obs('.project-card');
+obs('.skill-row');
+obs('.edu');
+</script>
+
+</body>
+</html>
