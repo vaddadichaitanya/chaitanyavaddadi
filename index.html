@@ -732,7 +732,15 @@
   }
 
   @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
+    nav {
+      padding: 14px 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nav-links {
+      display: none;
+    }
+    .nav-cta { margin-left: auto; }
     section { padding: 72px 24px; }
     #hero { padding: 100px 24px 60px; }
     .hero-side { display: none; }
@@ -740,8 +748,14 @@
     .exp-item { grid-template-columns: 1fr; gap: 16px; }
     .projects-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
-    .hero-stats { gap: 28px; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+    .hero-stat-num { font-size: 34px; }
   }
 </style>
 </head>
