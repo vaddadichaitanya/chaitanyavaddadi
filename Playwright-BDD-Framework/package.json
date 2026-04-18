@@ -1,0 +1,11 @@
+{
+  "name": "stripe-playwright-bdd",
+  "version": "1.0.0",
+  "scripts": { "test": "cucumber-js test" },
+  "devDependencies": {
+    "@cucumber/cucumber": "^9.5.1",
+    "@playwright/test": "^1.38.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
