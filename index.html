@@ -1423,7 +1423,7 @@
 <!-- FOOTER -->
 <footer>
   <span>Chaitanya Vaddadi</span>
-  <span>Updated April 2024 · Bengaluru, India</span>
+  <span>Updated April 2026 · Bengaluru, India</span>
 </footer>
 
 <script>
@@ -1453,8 +1453,20 @@
 
   // Close on menu link click
   menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent immediate scrolling
+      const targetId = link.getAttribute('href');
       closeMenu();
+
+      // Delay scroll to match closing animation duration
+      setTimeout(() => {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          // Update URL hash without jumping
+          history.pushState(null, null, targetId);
+        }
+      }, 700); // 700ms matches the menu overlay transition delay
     });
   });
 
