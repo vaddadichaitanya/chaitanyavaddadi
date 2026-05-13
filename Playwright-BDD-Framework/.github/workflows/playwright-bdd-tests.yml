@@ -1,0 +1,35 @@
+name: Playwright BDD Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      working-directory: ./Playwright-BDD-Framework
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      working-directory: ./Playwright-BDD-Framework
+      run: npx playwright install --with-deps
+
+    - name: Run BDD Tests
+      working-directory: ./Playwright-BDD-Framework
+      run: npm test
+
+    - name: Notify Slack
+      if: always()
+      run: echo "Sending webhook notification to Slack (simulated)"

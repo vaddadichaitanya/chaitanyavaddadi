@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3'
+        jdk 'JDK 11'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                dir('Selenium-Hybrid-Automation-Framework') {
+                    sh 'mvn clean test'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('Selenium-Hybrid-Automation-Framework') {
+                echo 'Archiving Extent Reports...'
+                archiveArtifacts artifacts: 'target/ExtentReports.html', allowEmptyArchive: true
+            }
+        }
+        success {
+            echo 'Selenium E-Commerce tests passed successfully!'
+        }
+        failure {
+            echo 'Selenium E-Commerce tests failed.'
+        }
+    }
+}
