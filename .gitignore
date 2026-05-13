@@ -1,1 +1,17 @@
+# Maven
+target/
+*/target/
+**/*/target/
+
+# Node.js
 node_modules/
+*/node_modules/
+**/*/node_modules/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Build
+dist/

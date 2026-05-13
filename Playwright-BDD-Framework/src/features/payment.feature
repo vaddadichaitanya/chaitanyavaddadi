@@ -1,6 +1,10 @@
-Feature: Payment Processing
-  Scenario: Successful Credit Card Payment
-    Given I am on the checkout page
-    When I enter valid card details
-    And I submit the payment
-    Then the payment should be successful
+Feature: E-Commerce Checkout Process
+
+  Scenario: Successful checkout of an item
+    Given I am on the saucedemo login page
+    When I login with standard_user and secret_sauce
+    And I add a product to the cart
+    And I go to the cart and checkout
+    And I fill in my checkout information
+    And I complete the purchase
+    Then I should see the checkout complete message
